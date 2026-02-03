@@ -9,7 +9,7 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   title: "Do bids hella fast | bidonsite.xyz",
-  description: "Do bids hella fast",
+  description: "Unofficial bid calculator for Gwyndow's Window Cleaning",
   icons: {
     icon: "/icon.png",
     apple: "/icon.png",
