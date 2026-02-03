@@ -1,7 +1,15 @@
 // WindowQuoteCalculator.js
-'use client';
-import React, { useState, useMemo } from 'react';
-import { Grid2x2, BrushCleaning, Leaf, RotateCcw, Copy, Check, X } from 'lucide-react';
+"use client";
+import React, { useState, useMemo } from "react";
+import {
+  Grid2x2,
+  BrushCleaning,
+  Leaf,
+  RotateCcw,
+  Copy,
+  Check,
+  X,
+} from "lucide-react";
 
 const PRICES = {
   XL_UPPER_WINDOW: 23.64,
@@ -25,69 +33,81 @@ const PRICES = {
   SECOND_STORY_GUTTER: 2,
 };
 
-const ITEMS_CONFIG = {
+type PriceKey = keyof typeof PRICES;
+
+type Section = "upperWindows" | "lowerWindows" | "screens" | "gutters";
+
+type Item = { key: PriceKey; label: string; desc?: string };
+
+type ItemsConfig = Record<Section, Item[]>;
+
+const ITEMS_CONFIG: ItemsConfig = {
   upperWindows: [
-    { key: 'XL_UPPER_WINDOW', label: 'XL Upper', desc: '> 27 sqft' },
-    { key: 'L_UPPER_WINDOW', label: 'L Upper', desc: '13 - 26 sqft' },
-    { key: 'M_UPPER_WINDOW', label: 'M Upper', desc: '4 - 12 sqft' },
-    { key: 'S_UPPER_WINDOW', label: 'S Upper', desc: '1 - 3 sqft' },
-    { key: 'XS_UPPER_WINDOW', label: 'XS Upper', desc: '< 1 sqft' },
+    { key: "XL_UPPER_WINDOW", label: "XL Upper", desc: "> 27 sqft" },
+    { key: "L_UPPER_WINDOW", label: "L Upper", desc: "13 - 26 sqft" },
+    { key: "M_UPPER_WINDOW", label: "M Upper", desc: "4 - 12 sqft" },
+    { key: "S_UPPER_WINDOW", label: "S Upper", desc: "1 - 3 sqft" },
+    { key: "XS_UPPER_WINDOW", label: "XS Upper", desc: "< 1 sqft" },
   ],
   lowerWindows: [
-    { key: 'XL_LOWER_WINDOW', label: 'XL Lower', desc: '> 27 sqft' },
-    { key: 'L_LOWER_WINDOW', label: 'L Lower', desc: '13 - 26 sqft' },
-    { key: 'M_LOWER_WINDOW', label: 'M Lower', desc: '4 - 12 sqft' },
-    { key: 'S_LOWER_WINDOW', label: 'S Lower', desc: '1 - 3 sqft' },
-    { key: 'XS_LOWER_WINDOW', label: 'XS Lower', desc: '< 1 sqft' },
+    { key: "XL_LOWER_WINDOW", label: "XL Lower", desc: "> 27 sqft" },
+    { key: "L_LOWER_WINDOW", label: "L Lower", desc: "13 - 26 sqft" },
+    { key: "M_LOWER_WINDOW", label: "M Lower", desc: "4 - 12 sqft" },
+    { key: "S_LOWER_WINDOW", label: "S Lower", desc: "1 - 3 sqft" },
+    { key: "XS_LOWER_WINDOW", label: "XS Lower", desc: "< 1 sqft" },
   ],
   screens: [
-    { key: 'EXTERIOR_HALF_SCREEN', label: 'Half Screens' },
+    { key: "EXTERIOR_HALF_SCREEN", label: "Half Screens" },
     {
-      key: 'EXTERIOR_HALF_SCREEN_INTERIOR',
-      label: 'Half Screens',
-      desc: 'Remove from inside',
+      key: "EXTERIOR_HALF_SCREEN_INTERIOR",
+      label: "Half Screens",
+      desc: "Remove from inside",
     },
     {
-      key: 'WHOLE_INTERIOR_SCREEN',
-      label: 'Full Screens',
-      desc: 'Interior or exterior',
+      key: "WHOLE_INTERIOR_SCREEN",
+      label: "Full Screens",
+      desc: "Interior or exterior",
     },
-    { key: 'SOLAR_SCREEN', label: 'Solar Screens' },
-    { key: 'SCREW_SOLAR_SCREEN', label: 'Screw-On Solar Screens' },
-    { key: 'UPPER_WOODEN_SCREEN', label: 'Upper Wooden Screens' },
-    { key: 'LOWER_WOODEN_SCREEN', label: 'Lower Wooden Screens' },
+    { key: "SOLAR_SCREEN", label: "Solar Screens" },
+    { key: "SCREW_SOLAR_SCREEN", label: "Screw-On Solar Screens" },
+    { key: "UPPER_WOODEN_SCREEN", label: "Upper Wooden Screens" },
+    { key: "LOWER_WOODEN_SCREEN", label: "Lower Wooden Screens" },
   ],
   gutters: [
     {
-      key: 'FIRST_STORY_GUTTER',
-      label: 'First Story',
-      desc: 'Linear feet',
+      key: "FIRST_STORY_GUTTER",
+      label: "First Story",
+      desc: "Linear feet",
     },
     {
-      key: 'SECOND_STORY_GUTTER',
-      label: 'Second Story',
-      desc: 'Linear feet',
+      key: "SECOND_STORY_GUTTER",
+      label: "Second Story",
+      desc: "Linear feet",
     },
   ],
 };
 
 const initQuantities = () =>
-  Object.keys(PRICES).reduce((acc, key) => ({ ...acc, [key]: 0 }), {});
+  Object.keys(PRICES).reduce(
+    (acc, key) => ({ ...acc, [key as PriceKey]: 0 }),
+    {} as Record<PriceKey, number>,
+  );
 
 const WindowQuoteCalculator = () => {
-  const [quantities, setQuantities] = useState(initQuantities);
-  const [toast, setToast] = useState('');
+  const [quantities, setQuantities] =
+    useState<Record<PriceKey, number>>(initQuantities);
+  const [toast, setToast] = useState("");
 
-  const toggleSelection = (key) =>
+  const toggleSelection = (key: PriceKey) =>
     setQuantities((prev) => ({
       ...prev,
       [key]: prev[key] > 0 ? 0 : 1,
     }));
 
-  const incrementQty = (key) =>
+  const incrementQty = (key: PriceKey) =>
     setQuantities((prev) => ({ ...prev, [key]: prev[key] + 1 }));
 
-  const decrementQty = (key) =>
+  const decrementQty = (key: PriceKey) =>
     setQuantities((prev) => ({
       ...prev,
       [key]: Math.max(1, prev[key] - 1),
@@ -95,22 +115,24 @@ const WindowQuoteCalculator = () => {
 
   const resetAll = () => setQuantities(initQuantities());
 
-  const showToast = (message) => {
+  const showToast = (message: string) => {
     setToast(message);
-    setTimeout(() => setToast(''), 3000);
+    setTimeout(() => setToast(""), 3000);
   };
 
-  const calcTotals = () => {
-    const windows = Object.entries(quantities)
-      .filter(([k]) => k.includes('WINDOW'))
+  const totals = useMemo(() => {
+    const entries = Object.entries(quantities) as [PriceKey, number][];
+
+    const windows = entries
+      .filter(([k]) => k.includes("WINDOW"))
       .reduce((sum, [k, qty]) => sum + qty * PRICES[k], 0);
 
-    const screens = Object.entries(quantities)
-      .filter(([k]) => k.includes('SCREEN'))
+    const screens = entries
+      .filter(([k]) => k.includes("SCREEN"))
       .reduce((sum, [k, qty]) => sum + qty * PRICES[k], 0);
 
-    const gutters = Object.entries(quantities)
-      .filter(([k]) => k.includes('GUTTER'))
+    const gutters = entries
+      .filter(([k]) => k.includes("GUTTER"))
       .reduce((sum, [k, qty]) => sum + qty * PRICES[k], 0);
 
     return {
@@ -118,32 +140,30 @@ const WindowQuoteCalculator = () => {
       outOnly: windows * 0.67 + screens,
       gutters,
     };
-  };
-
-  const totals = useMemo(() => calcTotals(), [quantities]);
+  }, [quantities]);
 
   const generateQuote = () => {
     const lines = [];
 
-    Object.entries(ITEMS_CONFIG).forEach(([section, items]) => {
-      items.forEach(({ key, label }) => {
+    (Object.keys(ITEMS_CONFIG) as Section[]).forEach((section) => {
+      ITEMS_CONFIG[section].forEach(({ key, label }) => {
         if (quantities[key] > 0) {
-          const isGutter = section === 'gutters';
+          const isGutter = section === "gutters";
           const value = isGutter ? `${quantities[key]} ft` : quantities[key];
-          const fullLabel = label + (isGutter ? ' Gutter' : '');
+          const fullLabel = label + (isGutter ? " Gutter" : "");
           lines.push(`${fullLabel}: ${value}`);
         }
       });
     });
 
-    if (lines.length) lines.push('');
+    if (lines.length) lines.push("");
     if (totals.inOut > 0) lines.push(`In/Out: $${totals.inOut.toFixed(2)}`);
     if (totals.outOnly > 0)
       lines.push(`Out Only: $${totals.outOnly.toFixed(2)}`);
     if (totals.gutters > 0)
       lines.push(`Gutter Cleaning: $${totals.gutters.toFixed(2)}`);
 
-    return lines.join('\n');
+    return lines.join("\n");
   };
 
   const copyQuote = async () => {
@@ -151,37 +171,37 @@ const WindowQuoteCalculator = () => {
       if (navigator.clipboard && navigator.clipboard.writeText) {
         await navigator.clipboard.writeText(generateQuote());
       } else {
-        const textarea = document.createElement('textarea');
+        const textarea = document.createElement("textarea");
         textarea.value = generateQuote();
-        textarea.setAttribute('readonly', '');
-        textarea.style.position = 'absolute';
-        textarea.style.left = '-9999px';
+        textarea.setAttribute("readonly", "");
+        textarea.style.position = "absolute";
+        textarea.style.left = "-9999px";
         document.body.appendChild(textarea);
         textarea.select();
         textarea.setSelectionRange(0, textarea.value.length);
-        document.execCommand('copy');
+        document.execCommand("copy");
         document.body.removeChild(textarea);
       }
 
-      showToast('Bid copied to clipboard');
+      showToast("Bid copied to clipboard");
     } catch (err) {
-      console.error('Clipboard error:', err);
-      showToast('Could not copy to clipboard');
+      console.error("Clipboard error:", err);
+      showToast("Could not copy to clipboard");
     }
   };
 
-  const getIcon = (section) => {
-    if (section === 'screens') return BrushCleaning;
-    if (section === 'gutters') return Leaf;
+  const getIcon = (section: Section) => {
+    if (section === "screens") return BrushCleaning;
+    if (section === "gutters") return Leaf;
     return Grid2x2;
   };
 
-  const getSectionTitle = (section) => {
-    const titles = {
-      upperWindows: 'Upper Windows',
-      lowerWindows: 'Lower Windows',
-      screens: 'Screens',
-      gutters: 'Gutters',
+  const getSectionTitle = (section: Section) => {
+    const titles: Record<Section, string> = {
+      upperWindows: "Upper Windows",
+      lowerWindows: "Lower Windows",
+      screens: "Screens",
+      gutters: "Gutters",
     };
     return titles[section];
   };
@@ -194,16 +214,14 @@ const WindowQuoteCalculator = () => {
             <div className="relative block px-4 outline-primary forced-colors:outline-[Highlight] outline-offset-2 py-3">
               <div className="flex flex-row items-center gap-4">
                 <div className="relative shrink-0">
-                  {toast.includes('copied') ? (
+                  {toast.includes("copied") ? (
                     <Check className="w-[30px] h-[30px]" />
                   ) : (
                     <X className="w-[30px] h-[30px]" />
                   )}
                 </div>
                 <div className="flex flex-col gap-1">
-                  <p className="text-sm font-medium leading-none">
-                    {toast}
-                  </p>
+                  <p className="text-sm font-medium leading-none">{toast}</p>
                 </div>
               </div>
             </div>
@@ -215,7 +233,8 @@ const WindowQuoteCalculator = () => {
         <div className="grid gap-8 md:gap-7.5 lg:gap-12.5 px-5 md:px-0 grid-cols-1 md:grid-cols-[20%_53%_20%] lg:grid-cols-[214px_532px_214px] xl:grid-cols-[214px_632px_214px]">
           {/* Left Column - All Items */}
           <div className="flex flex-col gap-7">
-            {Object.entries(ITEMS_CONFIG).map(([section, items]) => {
+            {(Object.keys(ITEMS_CONFIG) as Section[]).map((section) => {
+              const items = ITEMS_CONFIG[section];
               const Icon = getIcon(section);
               return (
                 <aside key={section} className="flex flex-col gap-2">
@@ -268,12 +287,17 @@ const WindowQuoteCalculator = () => {
               <h2 className="px-3 font-medium text-[#adadad]">Current Bid</h2>
               {Object.values(quantities).every((qty) => qty === 0) ? (
                 <div className="px-4 py-8 text-center text-neutral-50">
-                  <p className="hidden md:block">Select items from the left to get started</p>
-                  <p className="md:hidden">Select items from below to get started</p>
+                  <p className="hidden md:block">
+                    Select items from the left to get started
+                  </p>
+                  <p className="md:hidden">
+                    Select items from below to get started
+                  </p>
                 </div>
               ) : (
                 <ol>
-                  {Object.entries(ITEMS_CONFIG).map(([section, items]) => {
+                  {(Object.keys(ITEMS_CONFIG) as Section[]).map((section) => {
+                    const items = ITEMS_CONFIG[section];
                     const Icon = getIcon(section);
                     return items
                       .filter((item) => quantities[item.key] > 0)
