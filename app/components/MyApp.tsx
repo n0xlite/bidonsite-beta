@@ -215,9 +215,9 @@ const WindowQuoteCalculator = () => {
               <div className="flex flex-row items-center gap-4">
                 <div className="relative shrink-0">
                   {toast.includes("copied") ? (
-                    <Check className="w-[30px] h-[30px]" />
+                    <Check className="w-[18px] h-[18px]" />
                   ) : (
-                    <X className="w-[30px] h-[30px]" />
+                    <X className="w-[18px] h-[18px]" />
                   )}
                 </div>
                 <div className="flex flex-col gap-1">
@@ -393,7 +393,7 @@ const WindowQuoteCalculator = () => {
                 >
                   <div className="relative block px-4 outline-primary forced-colors:outline-[Highlight] outline-offset-2 py-3">
                     <div className="flex flex-row items-center justify-center gap-2">
-                      <RotateCcw size={16} />
+                      <RotateCcw size={18} />
                       <span className="text-sm font-medium">Reset</span>
                     </div>
                   </div>
@@ -405,7 +405,7 @@ const WindowQuoteCalculator = () => {
                 >
                   <div className="relative block px-4 outline-primary forced-colors:outline-[Highlight] outline-offset-2 py-3">
                     <div className="flex flex-row items-center justify-center gap-2">
-                      <Copy size={16} />
+                      <Copy size={18} />
                       <span className="text-sm font-medium">Copy</span>
                     </div>
                   </div>
