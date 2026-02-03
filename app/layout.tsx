@@ -8,7 +8,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "bidonsite.xyz",
+  title: "Do bids hella fast | bidonsite.xyz",
   description: "Do bids hella fast",
   icons: {
     icon: "/icon.png",

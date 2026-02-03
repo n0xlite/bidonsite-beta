@@ -10,7 +10,7 @@ export default function Header() {
                     width={24}
                     height={24}
                 />
-                <p className="font-medium inline-block select-none px-1 py-0.5 tracking-wider rounded-sm shrink-0 border border-neutral-700 text-white text-[8px]">BETA</p>
+                <p className="font-medium inline-block select-none px-1 py-0.5 tracking-wider rounded-sm shrink-0 border border-neutral-700 text-fg text-[8px]">BETA</p>
             </div>
         </header>
     );
