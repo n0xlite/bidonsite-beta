@@ -5,21 +5,21 @@
   --foreground: #e3e3e3;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-space-grotesk);
-  --font-mono: var(--font-space-grotesk);
-  --color-neutral-100: #232323;
-  --color-neutral-50: #838383;
-  --color-neutral-700: #404040;
-}
-
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #161616;
     --foreground: #e3e3e3;
   }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-space-grotesk);
+  --font-mono: var(--font-space-grotesk);
+  --color-neutral-50: #838383;
+  --color-neutral-100: #232323;
+  --color-neutral-700: #404040;
 }
 
 body {

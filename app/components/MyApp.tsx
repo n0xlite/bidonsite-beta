@@ -61,7 +61,7 @@ const ITEMS_CONFIG: ItemsConfig = {
     {
       key: "EXTERIOR_HALF_SCREEN_INTERIOR",
       label: "Half Screens",
-      desc: "Remove from inside",
+      desc: "Removed from interior",
     },
     {
       key: "WHOLE_INTERIOR_SCREEN",

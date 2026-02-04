@@ -2,11 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
   title: "Do bids hella fast | bidonsite.xyz",
   description: "Unofficial bid calculator for Gwyndow's Window Cleaning",
@@ -20,6 +15,11 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
 }
+
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
+  subsets: ["latin"],
+});
 
 export default function RootLayout({
   children,
