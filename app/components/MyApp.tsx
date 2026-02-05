@@ -1,4 +1,3 @@
-// WindowQuoteCalculator.js
 "use client";
 import React, { useState, useMemo } from "react";
 import {
@@ -383,35 +382,34 @@ const WindowQuoteCalculator = () => {
                   </div>
                 </li>
               </ol>
-
-              {/* Action Buttons */}
-              <div className="flex flex-row gap-2">
-                <button
-                  onClick={resetAll}
-                  className="flex-1 border-neutral-100 hover:bg-neutral-100/50 border rounded-[10px] cursor-pointer"
-                  aria-label="Reset all"
-                >
-                  <div className="relative block px-4 outline-primary forced-colors:outline-[Highlight] outline-offset-2 py-3">
-                    <div className="flex flex-row items-center justify-center gap-2">
-                      <RotateCcw size={18} />
-                      <span className="text-sm font-medium">Reset</span>
-                    </div>
-                  </div>
-                </button>
-                <button
-                  onClick={copyQuote}
-                  className="flex-1 border-neutral-100 hover:bg-neutral-100/50 border rounded-[10px] cursor-pointer"
-                  aria-label="Copy bid"
-                >
-                  <div className="relative block px-4 outline-primary forced-colors:outline-[Highlight] outline-offset-2 py-3">
-                    <div className="flex flex-row items-center justify-center gap-2">
-                      <Copy size={18} />
-                      <span className="text-sm font-medium">Copy</span>
-                    </div>
-                  </div>
-                </button>
-              </div>
             </aside>
+            {/* Action Buttons */}
+            <div className="flex flex-row gap-2">
+              <button
+                onClick={resetAll}
+                className="flex-1 border-neutral-100 hover:bg-neutral-100/50 border rounded-[10px] cursor-pointer"
+                aria-label="Reset all"
+              >
+                <div className="relative block px-4 outline-primary forced-colors:outline-[Highlight] outline-offset-2 py-3">
+                  <div className="flex flex-row items-center justify-center gap-2">
+                    <RotateCcw size={18} />
+                    <span className="text-sm font-medium">Reset</span>
+                  </div>
+                </div>
+              </button>
+              <button
+                onClick={copyQuote}
+                className="flex-1 border-neutral-100 hover:bg-neutral-100/50 border rounded-[10px] cursor-pointer"
+                aria-label="Copy bid"
+              >
+                <div className="relative block px-4 outline-primary forced-colors:outline-[Highlight] outline-offset-2 py-3">
+                  <div className="flex flex-row items-center justify-center gap-2">
+                    <Copy size={18} />
+                    <span className="text-sm font-medium">Copy</span>
+                  </div>
+                </div>
+              </button>
+            </div>
           </div>
         </div>
       </div>
