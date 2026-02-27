@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useMemo } from "react";
+import { PRICES } from "@/lib/prices";
 import {
   Grid2x2,
   BrushCleaning,
@@ -9,28 +10,6 @@ import {
   Check,
   X,
 } from "lucide-react";
-
-const PRICES = {
-  XL_UPPER_WINDOW: 23.64,
-  L_UPPER_WINDOW: 16.06,
-  M_UPPER_WINDOW: 8.59,
-  S_UPPER_WINDOW: 6.85,
-  XS_UPPER_WINDOW: 3.56,
-  XL_LOWER_WINDOW: 17.98,
-  L_LOWER_WINDOW: 11.43,
-  M_LOWER_WINDOW: 6.49,
-  S_LOWER_WINDOW: 4.31,
-  XS_LOWER_WINDOW: 2.54,
-  EXTERIOR_HALF_SCREEN: 2.72,
-  WHOLE_INTERIOR_SCREEN: 3.12,
-  EXTERIOR_HALF_SCREEN_INTERIOR: 4.0,
-  SOLAR_SCREEN: 5.56,
-  SCREW_SOLAR_SCREEN: 8,
-  UPPER_WOODEN_SCREEN: 14,
-  LOWER_WOODEN_SCREEN: 7,
-  FIRST_STORY_GUTTER: 1,
-  SECOND_STORY_GUTTER: 2,
-};
 
 type PriceKey = keyof typeof PRICES;
 
