@@ -1,0 +1,53 @@
+--- a/main.go
++++ b/main.go
+@@ -46,16 +46,6 @@ var (
+ 		Bold(true).
+ 		Foreground(lipgloss.Color("12")).
+ 		MarginBottom(1)
+ 
+-	selectedLineStyle = lipgloss.NewStyle().
+-			Background(lipgloss.Color("22")).
+-			Foreground(lipgloss.Color("10")).
+-			Bold(true)
+-
+ 	cursorLineStyle = lipgloss.NewStyle().
+ 			Background(lipgloss.Color("12")).
+ 			Foreground(lipgloss.Color("0")).
+ 			Bold(true)
+ 
+-	cursorSelectedLineStyle = lipgloss.NewStyle().
+-			Background(lipgloss.Color("6")).
+-			Foreground(lipgloss.Color("0")).
+-			Bold(true)
+-
+ 	checkStyle = lipgloss.NewStyle().
+@@ -243,19 +233,11 @@ func (m model) viewSelect() string {
+ 		priceStr := fmt.Sprintf("$%.2f", p.Value)
+ 		leftSide := fmt.Sprintf("%-32s", p.Key)
+ 		padding := strings.Repeat(" ", 20-len(priceStr))
+ 		line := fmt.Sprintf("%s %s%s%s", checkmark, leftSide, padding, priceStr)
+ 
+-		switch {
+-		case isCursor && isSelected:
+-			sb.WriteString(cursorSelectedLineStyle.Render(
+-				fmt.Sprintf("%s %s%s%s", "●", leftSide, padding, priceStr),
+-			))
+-		case isCursor:
+-			sb.WriteString(cursorLineStyle.Render(
+-				fmt.Sprintf("%s %s%s%s", "○", leftSide, padding, priceStr),
+-			))
+-		case isSelected:
+-			sb.WriteString(selectedLineStyle.Render(
+-				fmt.Sprintf("%s %s%s%s", "●", leftSide, padding, priceStr),
+-			))
+-		default:
+-			sb.WriteString(line)
+-		}
++		switch {
++		case isCursor:
++			sb.WriteString(cursorLineStyle.Render(
++				fmt.Sprintf("%s %s%s%s", map[bool]string{true: "●", false: "○"}[isSelected], leftSide, padding, priceStr),
++			))
++		default:
++			sb.WriteString(line)
++		}

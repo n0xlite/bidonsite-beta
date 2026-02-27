@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "update-prices": "bash scripts/update-prices.sh"
   },
   "dependencies": {
     "lucide-react": "^0.563.0",
